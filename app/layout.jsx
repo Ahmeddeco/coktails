@@ -2,7 +2,6 @@ import "./globals.css"
 import Navbar from "@/components/Navbar"
 import localFont from "next/font/local"
 
-
 const roboto = localFont({
   src: "../public/fonts/Roboto.ttf",
 })

@@ -5,13 +5,19 @@ import leftleaf from "@/public/images/hero-left-leaf.webp"
 import rightleaf from "@/public/images/hero-right-leaf.webp"
 import Link from "next/link"
 import {useGSAP} from "@gsap/react"
-import {GSDevTools} from "gsap/GSDevTools"
 import {ScrollTrigger, SplitText} from "gsap/all"
 import gsap from "gsap"
+import {useRef} from "react"
+import {useMediaQuery} from "react-responsive"
 
-gsap.registerPlugin(ScrollTrigger, SplitText, GSDevTools)
+gsap.registerPlugin(ScrollTrigger, SplitText)
 
 const Hero = () => {
+
+  const videoRef = useRef()
+
+  const isMobile = useMediaQuery({maxWidth: 768})
+
   useGSAP(() => {
     const heroSplit = new SplitText(".title", {type: "chars, words"})
     const paragraphSplit = new SplitText(".subtitle", {type: "lines"})
@@ -27,13 +33,46 @@ const Hero = () => {
       stagger: 0.06,
       delay: 1
     })
+
+    // Leaf animation timeline
     gsap.timeline({
-      scrollTrigger: {trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true},
+      scrollTrigger: {
+        trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true,
+      },
     })
       .to('.right-leaf', {y: 300}, 0)
       .to('.left-leaf', {y: -300}, 0)
 
-    // GSDevTools.create()
+    // Set up video scrubbing with ScrollTrigger
+    const startValue = isMobile ? 'top 50%' : 'center 60%'
+    const endValue = isMobile ? '120% top' : 'bottom top'
+
+    // Make sure video is initially paused at the first frame
+    videoRef.current.currentTime = 0
+    videoRef.current.pause()
+
+    // Function to create ScrollTrigger for video scrubbing
+    // This controls the video timeline based on scroll position
+    // allowing the video to be scrubbed as the user scrolls the page
+    const createVideoScrubber = () => {
+      // Create a ScrollTrigger that directly controls the video timeline
+      ScrollTrigger.create({
+        trigger: videoRef.current,
+        start: startValue,
+        end: endValue,
+        scrub: .1, // Smoother scrubbing effect (lower values = smoother)
+        pin: true,
+        onUpdate: (self) => {
+          // Calculate the current time based on scroll progress
+          if (videoRef.current.duration) {
+            const videoTime = self.progress * videoRef.current.duration
+            videoRef.current.currentTime = videoTime
+          }
+        }
+      })
+    }
+    createVideoScrubber()
+
   }, [])
 
   return (
@@ -62,6 +101,15 @@ const Hero = () => {
           </div>
         </div>
       </section>
+      <div className="video absolute inset-0 z-[1]">
+        <video
+          ref={videoRef}
+          src="/videos/output.mp4"
+          muted
+          playsInline
+          preload="auto"
+        />
+      </div>
     </>
   )
 }

@@ -5,7 +5,6 @@ const HomePage = () => {
   return (
     <>
       <Hero/>
-      <div className="h-dvh"></div>
     </>
   )
 }
