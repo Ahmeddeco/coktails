@@ -3,6 +3,7 @@
 import Image from "next/image"
 import leftleaf from "@/public/images/hero-left-leaf.webp"
 import rightleaf from "@/public/images/hero-right-leaf.webp"
+import arrowImg from "@/public/images/arrow.webp"
 import Link from "next/link"
 import {useGSAP} from "@gsap/react"
 import {ScrollTrigger, SplitText} from "gsap/all"
@@ -42,6 +43,7 @@ const Hero = () => {
     })
       .to('.right-leaf', {y: 300}, 0)
       .to('.left-leaf', {y: -300}, 0)
+      .to(".arrow", {y: 200}, 0)
 
     // Set up video scrubbing with ScrollTrigger
     const startValue = isMobile ? 'top 50%' : 'center 60%'
@@ -82,6 +84,7 @@ const Hero = () => {
         <Image src={leftleaf} alt="left leaf" className="left-leaf"/>
         <Image src={rightleaf} alt="right leaf" className="right-leaf"/>
         <div className="body">
+          <Image src={arrowImg} alt={arrowImg} className={'arrow'}/>
           <div className="content">
             <div className="space-y-5 hidden md:block">
               <p className="">Cool. Crisp. Classic</p>
@@ -101,7 +104,7 @@ const Hero = () => {
           </div>
         </div>
       </section>
-      <div className="video absolute inset-0 z-[1]">
+      <div className="video absolute inset-0">
         <video
           ref={videoRef}
           src="/videos/output.mp4"

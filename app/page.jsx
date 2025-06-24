@@ -1,10 +1,11 @@
 import Hero from "@/components/Hero"
-import React from "react"
+import Cocktails from "@/components/Cocktails"
 
 const HomePage = () => {
   return (
     <>
       <Hero/>
+      <Cocktails/>
     </>
   )
 }
