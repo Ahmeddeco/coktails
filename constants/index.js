@@ -172,16 +172,3 @@ export const allCocktails = [
       "Each cocktail is made with fresh ingredients and a passion for perfecting every pour, whether you're celebrating or simply relaxing.",
   },
 ]
-
-export {
-  navLinks,
-  cocktailLists,
-  mockTailLists,
-  profileLists,
-  featureLists,
-  goodLists,
-  openingHours,
-  storeInfo,
-  socials,
-  allCocktails,
-}
