@@ -1,6 +1,7 @@
 import "./globals.css"
 import Navbar from "@/components/Navbar"
 import localFont from "next/font/local"
+import Footer from "@/components/Footer"
 
 const roboto = localFont({
   src: "../public/fonts/Roboto.ttf",
@@ -17,6 +18,7 @@ export default function RootLayout({children}) {
     <body className={` ${roboto.className} antialiased`}>
     <Navbar/>
     {children}
+    <Footer/>
     </body>
     </html>
   )
